@@ -87,6 +87,7 @@ git_status() {
         git status
     else
 	grep -v '^ref: refs/heads/master$' .git/HEAD | sed 's?^ref: refs/heads/?HEAD: ?' || true
+	git log --oneline  origin/master..master  # TODO: might not work well if you are not on master branch
         git status --short
     fi
 }
