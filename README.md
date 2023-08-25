@@ -51,7 +51,7 @@ There is some basic help info available
 $ mgit --help
 Usage: mgit [options] [dir ...]
 
-The purpose of sgit is git commands in multiple directories
+The purpose of mgit is to manage multiple git clones
 Options can be:
     -h|--help          display this help and exit
     -v|--verbose       verbose mode.
