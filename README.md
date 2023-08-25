@@ -20,7 +20,23 @@ A  mgit
 ======= vissy =============
  M vissy
 ```
-you can also be more explicit about which command and which directories you want to process:
+After moving sgit from another project (kloink), and renaming it to mgit, my output looked like this.
+It shows that I have not pushed some commits to the origin
+```
+$ mgit
+dirs=*
+======= kloink =============
+d6b21ef (HEAD -> master) removed sgit, since it now is in mgit repo
+======= mgit =============
+ M mgit
+======= my-links =============
+======= savv =============
+======= savvy-tools =============
+======= vissy =============
+ M vissy
+```
+
+You can also be more explicit about which command and which directories you want to process:
 ```
 $ mgit --status savv*
 dirs=savv savvy-tools
