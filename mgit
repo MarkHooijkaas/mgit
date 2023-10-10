@@ -86,10 +86,15 @@ git_status() {
     if $VERBOSE ; then
         git status
     else
-	grep -v '^ref: refs/heads/master$' .git/HEAD | sed 's?^ref: refs/heads/?HEAD: ?' || true
-	git log --oneline  origin/master..master  # TODO: might not work well if you are not on master branch
-        git status --short
-    fi
+        main_branch=master
+        if [[ -f .git/refs/heads/main ]]; then
+            # default branch on github and gitlab now is main
+            main_branch=main
+        fi
+        grep -v "^ref: refs/heads/${main_branch}\$" .git/HEAD | sed 's?^ref: refs/heads/?HEAD: ?' || true
+        git log --oneline  origin/${main_branch}..${main_branch}  # TODO: might not work well if you are not on master branch
+            git status --short
+        fi
 }
 
 git_pull() {
