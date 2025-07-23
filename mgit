@@ -44,6 +44,14 @@ while [[ ${1:-} == -* ]]; do
             file=$1
             shift
             ;;
+        -b|--branch)
+            CMD=git_checkout
+            branch=$1
+            shift
+            ;;
+        --diff)
+            CMD=git_diff
+            ;;
         --push)
             CMD=git_push
             ;;
@@ -75,7 +83,9 @@ Options can be:
     -q|--quiet         quiet mode.
     -s|--status        show git status (default)
     -m|--commit <msg>  git commit with message
+    -c|--checkout <br> git checkout <br>
     -a|--add <file>    git add one file or dir (e.g. .)
+       --diff          git diff
     -l|--pull          git pull
        --push          git push
     -c|--cmd <cmd>     perform any command
@@ -91,10 +101,18 @@ git_status() {
             # default branch on github and gitlab now is main
             main_branch=main
         fi
+        branch=`git rev-parse --abbrev-ref HEAD`
+        if [[ ! "$main_branch" == "${branch}" ]]; then
+            echo $branch
+        fi
         grep -v "^ref: refs/heads/${main_branch}\$" .git/HEAD | sed 's?^ref: refs/heads/?HEAD: ?' || true
         git log --oneline  origin/${main_branch}..${main_branch}  # TODO: might not work well if you are not on master branch
-            git status --short
+        git status --short
         fi
+}
+
+git_diff() {
+    GIT_PAGER=cat git diff $OPTS
 }
 
 git_pull() {
@@ -111,6 +129,10 @@ git_commit() {
 
 git_add() {
     git add $file $OPTS || true
+}
+
+git_checkout() {
+    git checkout $branch $OPTS || true
 }
 
 
